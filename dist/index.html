@@ -33,7 +33,27 @@
       <div id="task-details" class="task-div"></div>
       <div class="form hideform">
         <form action="">
-          
+          <div>
+            <label for="title"></label>
+            <input type="text" id="title" placeholder="I want to ...">
+          </div>
+          <div>
+            <label for="notes"></label>
+            <textarea name="notes" id="notes" placeholder="Notes ..."></textarea>
+          </div>
+          <div>
+            <label for="due-date"></label>
+            <input type="date" id="due-date">
+          </div>
+          <div>
+            <label for="priority">Priority:</label>
+            <select name="priority" id="priority">
+              <option value="normal" selected>normal</option>
+              <option value="high">high</option>
+              <option value="low">low</option>
+            </select>
+          </div>
+          <button type="button" id="submit">Submit</button>
         </form>
       </div>
     </div>

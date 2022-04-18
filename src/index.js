@@ -1,12 +1,16 @@
 import './style.css';
+import { displayTasks } from './dom';
 
 const autorun = (() => {
-  const taskBtn = document.getElementById('taskBtn');
-  taskBtn.onclick = openTaskForm;
+  const submit = document.getElementById('submit');
+  submit.onclick = addTask;
+  const currentProject = project('default');
+  displayTasks(currentProject.getArr());
+  return {currentProject};
 })();
 
-function task(title, description, dueDate, priority) {
-  return {title, description, dueDate, priority}
+function task(title, notes, dueDate, priority) {
+  return {title, notes, dueDate, priority}
 }
 
 function project(name) {
@@ -20,9 +24,16 @@ function project(name) {
   return {addTask, getArr};
 }
 
-function openTaskForm() {
-  const tint = document.querySelector('.tint');
-  tint.classList.toggle('dim');
-  const form = document.querySelector('.form');
-  form.classList.toggle('hideform');
+function addTask() {
+  const title = getValue('title');
+  const notes = getValue('notes');
+  const dueDate = getValue('due-date');
+  const priority = getValue('priority');
+  const newTask = task(title, notes, dueDate, priority);
+  autorun.currentProject.addTask(newTask);
+  displayTasks(autorun.currentProject.getArr());
+}
+
+function getValue(id) {
+  return document.getElementById(id).value;
 }
