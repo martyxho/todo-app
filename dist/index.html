@@ -7,7 +7,7 @@
   <title>Document</title>
   <script src="main.js" defer></script>
 </head>
-<body>
+<body class="tint">
   <div id="container">
     <div id="sidebar">
       <div id="side-top">
@@ -16,15 +16,26 @@
           <p>Jack</p>
         </div>
         <div id="side-btn">
-          <button id="addTask">+ Create a task</button>
+          <button id="taskBtn">+ Create a task</button>
         </div>
       </div>
       <div id="side-bot">
-        
+        <div id="projects">
+          <h1>Projects</h1>
+          <ul id="projects-list">
+            <li>default</li>
+          </ul>
+        </div>
       </div>
     </div>
     <div id="content">
-
+      <div id="task-box" class="task-div"></div>
+      <div id="task-details" class="task-div"></div>
+      <div class="form hideform">
+        <form action="">
+          
+        </form>
+      </div>
     </div>
   </div>
 </body>
