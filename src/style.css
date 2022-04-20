@@ -43,6 +43,7 @@
   background: white;
   border-radius: 20px;
   border: none;
+  padding: 20px;
 }
 
 .form {
@@ -59,6 +60,6 @@
   z-index: 10000;
 }
 
-.hideform {
+.hide {
   display: none;
 }

@@ -5,6 +5,7 @@ const autorun = (() => {
 
 function displayTasks(arr) {
   const taskBox = document.getElementById('task-box');
+  clear(taskBox);
   arr.forEach(e => {
     const div = document.createElement('div');
     div.classList.add('task');
@@ -18,12 +19,14 @@ function displayTasks(arr) {
 
 function displayDetails(e) {
   const taskDetails = document.getElementById('task-details');
+  clear(taskDetails);
   const dueDate = createDiv('Due Date: ', e, 'dueDate');
   const notes = createDiv('Notes: ', e, 'notes');
   const priority = createDiv('Priority: ', e, 'priority');
   taskDetails.appendChild(dueDate);
   taskDetails.appendChild(notes);
   taskDetails.appendChild(priority);
+  taskDetails.classList.remove('hide');
 }
 
 function createDiv(title, e, key) {
@@ -37,7 +40,13 @@ function openTaskForm() {
   const tint = document.querySelector('.tint');
   tint.classList.toggle('dim');
   const form = document.querySelector('.form');
-  form.classList.toggle('hideform');
+  form.classList.toggle('hide');
+}
+
+function clear(div) {
+  while(div.firstChild) {
+    div.removeChild(div.firstChild);
+  }
 }
 
 export { displayTasks };
