@@ -1,5 +1,5 @@
 import './style.css';
-import { displayTasks , displayLists } from './dom';
+import { displayTasks , displayLists, notifyRequired, removeRequired, closeForm } from './dom';
 
 const lists = (() => {
   const listObj = {};
@@ -72,13 +72,19 @@ function addList() {
 }
 
 function addTask() {
-  const title = getValue('title');
+  const title = getValue('title').trim();
+  if (!title) {
+    notifyRequired('title');
+    return;
+  }
   const notes = getValue('notes');
   const dueDate = getValue('due-date');
   const priority = getValue('priority');
   const newTask = task(title, notes, dueDate, priority);
   lists.getCurrent().addTask(newTask);
   calls.callDTasks();
+  removeRequired();
+  closeForm('task-form');
 }
 
 function getValue(id) {

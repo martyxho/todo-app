@@ -61,6 +61,7 @@ function openForm(id) {
 function closeForm(id) {
   toggleForm(id);
   resetForm(id);
+  removeRequired();
 }
 
 function toggleForm(id) {
@@ -70,7 +71,23 @@ function toggleForm(id) {
   form.classList.toggle('hide');
 }
 
+function notifyRequired(inputId) {
+  const input = document.getElementById(inputId);
+  input.classList.toggle('red');
+  const div = input.parentElement;
+  div.classList.toggle('required');
+}
 
+function removeRequired() {
+  const red = document.querySelector('.red');
+  if(red) {
+    red.classList.toggle('red');
+  } else {
+    return;
+  }
+  const div = document.querySelector('.required');
+  div.classList.toggle('required');
+}
 
 function resetForm(id) {
   const div = document.getElementById(id);
@@ -86,4 +103,4 @@ function clear(div) {
 
 
 
-export { displayTasks, displayLists };
+export { displayTasks, displayLists, notifyRequired, removeRequired, closeForm };

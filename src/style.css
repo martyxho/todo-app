@@ -60,6 +60,15 @@
   z-index: 10000;
 }
 
+.red {
+  border: 1px solid red;
+}
+
+.required::after {
+  content: '*required';
+  color: red;
+}
+
 #sidebar {
   display: grid;
   grid-auto-rows: max-content;
