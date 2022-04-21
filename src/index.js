@@ -17,6 +17,9 @@ const lists = (() => {
   return {getList, addList, getCurrent, changeCurrent};
 })();
 
+const calls = (() => {
+ 
+})();
 const autorun = (() => {
   const submit = document.getElementById('submit');
   submit.onclick = addTask;
@@ -26,9 +29,12 @@ const autorun = (() => {
   const task2 = task('sushi', 'notes', '2022-06-27', 'high');
   lists.getCurrent().addTask(task1);
   lists.getCurrent().addTask(task2);
+  const newList = list('sushi');
+  lists.addList('sushi', newList);
   displayLists(lists.getList());
   displayTasks(lists.getCurrent().getArr());
 })();
+
 
 function task(title, notes, dueDate, priority) {
   return {title, notes, dueDate, priority}
@@ -43,6 +49,11 @@ function list(name) {
     return arr;
   }
   return {addTask, getArr};
+}
+
+function changeList(prop) {
+  lists.changeCurrent(prop);
+  displayTasks(lists.getCurrent().getArr());
 }
 
 function addList() {
@@ -65,3 +76,7 @@ function addTask() {
 function getValue(id) {
   return document.getElementById(id).value;
 }
+
+
+
+export { changeList };

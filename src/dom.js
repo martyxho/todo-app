@@ -1,3 +1,5 @@
+import { changeList } from ".";
+
 const autorun = (() => {
   const taskBtn = document.getElementById('taskBtn');
   taskBtn.addEventListener('click', openForm.bind(null, 'task-form'));
@@ -12,6 +14,7 @@ function displayLists(obj) {
     const li = document.createElement('li');
     const div = document.createElement('div');
     div.id = prop;
+    div.addEventListener('click', changeList.bind(null, prop));
     const p = document.createElement('p');
     p.textContent = prop;
     div.appendChild(p);
@@ -19,6 +22,7 @@ function displayLists(obj) {
     ul.appendChild(li);
   }
 }
+
 function displayTasks(arr) {
   const taskBox = document.getElementById('task-box');
   clear(taskBox);
