@@ -60,6 +60,24 @@
   z-index: 10000;
 }
 
+#sidebar {
+  display: grid;
+  grid-auto-rows: max-content;
+  gap: 20px;
+}
+
+#side-btn {
+  align-self: center;
+}
+
+#list-header, #side-top {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: 20px;
+}
+
+
+
 .hide {
   display: none;
 }

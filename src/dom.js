@@ -1,8 +1,24 @@
 const autorun = (() => {
   const taskBtn = document.getElementById('taskBtn');
-  taskBtn.onclick = openTaskForm;
+  taskBtn.addEventListener('click', openForm.bind(null, 'task-form'));
+  const listBtn = document.getElementById('listBtn');
+  listBtn.addEventListener('click', openForm.bind(null, 'list-form'));
 })();
 
+function displayLists(obj) {
+  const ul = document.getElementById('list-ul');
+  clear(ul);
+  for (const prop in obj) {
+    const li = document.createElement('li');
+    const div = document.createElement('div');
+    div.id = prop;
+    const p = document.createElement('p');
+    p.textContent = prop;
+    div.appendChild(p);
+    li.appendChild(div);
+    ul.appendChild(li);
+  }
+}
 function displayTasks(arr) {
   const taskBox = document.getElementById('task-box');
   clear(taskBox);
@@ -36,33 +52,18 @@ function openTaskForm() {
   form.classList.toggle('hide');
 }
 
+function openForm(id) {
+  const tint = document.querySelector('.tint');
+  tint.classList.toggle('dim');
+  const form = document.getElementById(id);
+  form.classList.toggle('hide');
+}
+
 function clear(div) {
   while(div.firstChild) {
     div.removeChild(div.firstChild);
   }
 }
 
-// function displayDetails(e) {
-//   const taskDetails = document.getElementById('task-details');
-//   clear(taskDetails);
-//   const dueDate = createDiv('Due Date: ', e, 'dueDate');
-//   const notes = createDiv('Notes: ', e, 'notes');
-//   const priority = createDiv('Priority: ', e, 'priority');
-//   taskDetails.appendChild(dueDate);
-//   taskDetails.appendChild(notes);
-//   taskDetails.appendChild(priority);
-//   taskDetails.classList.remove('hide');
-// }
 
-// function createDiv(title, type, e, key) {
-//   const div = document.createElement('div');
-//   const label = document.createElement('label');
-//   label.for = title.toLowerCase();
-//   const input = document.createElement('input');
-//   input.type = type;
-//   p.textContent = title + e[key];
-//   div.appendChild(p);
-//   return div;
-// }
-
-export { displayTasks };
+export { displayTasks, displayLists };
