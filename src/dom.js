@@ -5,6 +5,10 @@ const autorun = (() => {
   taskBtn.addEventListener('click', openForm.bind(null, 'task-form'));
   const listBtn = document.getElementById('listBtn');
   listBtn.addEventListener('click', openForm.bind(null, 'list-form'));
+  const taskCancel = document.getElementById('task-cancel');
+  taskCancel.addEventListener('click', closeForm.bind(null, 'task-form'));
+  const listCancel = document.getElementById('list-cancel');
+  listCancel.addEventListener('click', closeForm.bind(null, 'list-form'));
 })();
 
 function displayLists(obj) {
@@ -49,18 +53,29 @@ function changeValue(id, value) {
   const input = document.getElementById(id);
   input.value = value;
 }
-function openTaskForm() {
-  const tint = document.querySelector('.tint');
-  tint.classList.toggle('dim');
-  const form = document.querySelector('.form');
-  form.classList.toggle('hide');
-}
 
 function openForm(id) {
+  toggleForm(id);
+}
+
+function closeForm(id) {
+  toggleForm(id);
+  resetForm(id);
+}
+
+function toggleForm(id) {
   const tint = document.querySelector('.tint');
   tint.classList.toggle('dim');
   const form = document.getElementById(id);
   form.classList.toggle('hide');
+}
+
+
+
+function resetForm(id) {
+  const div = document.getElementById(id);
+  const form = div.firstElementChild;
+  form.reset();
 }
 
 function clear(div) {
@@ -68,6 +83,7 @@ function clear(div) {
     div.removeChild(div.firstChild);
   }
 }
+
 
 
 export { displayTasks, displayLists };

@@ -28,10 +28,10 @@ const calls = (() => {
 })();
 
 const autorun = (() => {
-  const submit = document.getElementById('submit');
-  submit.onclick = addTask;
-  const create = document.getElementById('list-create');
-  create.onclick = addList;
+  const taskCreate = document.getElementById('task-create');
+  taskCreate.onclick = addTask;
+  const listCreate = document.getElementById('list-create');
+  listCreate.onclick = addList;
   const task1 = task('laundry', 'notes', '2022-12-23', 'normal');
   const task2 = task('sushi', 'notes', '2022-06-27', 'high');
   lists.getCurrent().addTask(task1);
@@ -68,6 +68,7 @@ function addList() {
   const newList = list(name);
   lists.addList(name, newList);
   calls.callDLists();
+  changeList(name);
 }
 
 function addTask() {
