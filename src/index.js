@@ -18,8 +18,15 @@ const lists = (() => {
 })();
 
 const calls = (() => {
- 
+  function callDLists() {
+    displayLists(lists.getList());
+  }
+  function callDTasks() {
+    displayTasks(lists.getCurrent().getArr());
+  }
+  return { callDLists, callDTasks };
 })();
+
 const autorun = (() => {
   const submit = document.getElementById('submit');
   submit.onclick = addTask;
@@ -31,8 +38,8 @@ const autorun = (() => {
   lists.getCurrent().addTask(task2);
   const newList = list('sushi');
   lists.addList('sushi', newList);
-  displayLists(lists.getList());
-  displayTasks(lists.getCurrent().getArr());
+  calls.callDLists();
+  calls.callDTasks();
 })();
 
 
@@ -53,14 +60,14 @@ function list(name) {
 
 function changeList(prop) {
   lists.changeCurrent(prop);
-  displayTasks(lists.getCurrent().getArr());
+  calls.callDTasks();
 }
 
 function addList() {
   const name = getValue('list-name');
   const newList = list(name);
   lists.addList(name, newList);
-  displayLists(lists.getList());
+  calls.callDLists();
 }
 
 function addTask() {
@@ -70,7 +77,7 @@ function addTask() {
   const priority = getValue('priority');
   const newTask = task(title, notes, dueDate, priority);
   lists.getCurrent().addTask(newTask);
-  displayTasks(lists.getCurrent().getArr());
+  calls.callDTasks();
 }
 
 function getValue(id) {
