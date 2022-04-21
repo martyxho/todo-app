@@ -18,23 +18,16 @@ function displayTasks(arr) {
 }
 
 function displayDetails(e) {
-  const taskDetails = document.getElementById('task-details');
-  clear(taskDetails);
-  const dueDate = createDiv('Due Date: ', e, 'dueDate');
-  const notes = createDiv('Notes: ', e, 'notes');
-  const priority = createDiv('Priority: ', e, 'priority');
-  taskDetails.appendChild(dueDate);
-  taskDetails.appendChild(notes);
-  taskDetails.appendChild(priority);
-  taskDetails.classList.remove('hide');
+  changeValue('title', e.title);
+  changeValue('notes', e.notes);
+  changeValue('due-date', e.dueDate);
+  changeValue('priority', e.priority);
+  openTaskForm();
 }
 
-function createDiv(title, e, key) {
-  const div = document.createElement('div');
-  const p = document.createElement('p');
-  p.textContent = title + e[key];
-  div.appendChild(p);
-  return div;
+function changeValue(id, value) {
+  const input = document.getElementById(id);
+  input.value = value;
 }
 function openTaskForm() {
   const tint = document.querySelector('.tint');
@@ -48,5 +41,28 @@ function clear(div) {
     div.removeChild(div.firstChild);
   }
 }
+
+// function displayDetails(e) {
+//   const taskDetails = document.getElementById('task-details');
+//   clear(taskDetails);
+//   const dueDate = createDiv('Due Date: ', e, 'dueDate');
+//   const notes = createDiv('Notes: ', e, 'notes');
+//   const priority = createDiv('Priority: ', e, 'priority');
+//   taskDetails.appendChild(dueDate);
+//   taskDetails.appendChild(notes);
+//   taskDetails.appendChild(priority);
+//   taskDetails.classList.remove('hide');
+// }
+
+// function createDiv(title, type, e, key) {
+//   const div = document.createElement('div');
+//   const label = document.createElement('label');
+//   label.for = title.toLowerCase();
+//   const input = document.createElement('input');
+//   input.type = type;
+//   p.textContent = title + e[key];
+//   div.appendChild(p);
+//   return div;
+// }
 
 export { displayTasks };
