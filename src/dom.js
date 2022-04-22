@@ -18,7 +18,7 @@ function displayLists(obj) {
     const li = document.createElement('li');
     const div = document.createElement('div');
     div.id = prop;
-    div.addEventListener('click', changeList.bind(null, prop));
+    div.addEventListener('click', listClick.bind(null, prop));
     const p = document.createElement('p');
     p.textContent = prop;
     div.appendChild(p);
@@ -100,6 +100,16 @@ function resetForm(id) {
   form.reset();
 }
 
+function listClick(prop) {
+  setListName(prop);
+  changeList(prop);
+}
+
+function setListName(name) {
+  const input = document.getElementById('list-name-info');
+  input.value = name;
+}
+
 function clear(div) {
   while(div.firstChild) {
     div.removeChild(div.firstChild);
@@ -108,4 +118,4 @@ function clear(div) {
 
 
 
-export { displayTasks, displayLists, notifyRequired, removeRequired, closeForm };
+export { displayTasks, displayLists, notifyRequired, removeRequired, closeForm, setListName };

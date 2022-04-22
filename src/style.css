@@ -19,9 +19,16 @@
 #content {
   background: url(./mtn.webp);
   display: grid;
-  grid-template-columns: max-content max-content;
+  grid-template-rows: max-content 1fr;
   gap: 40px;
-  padding: 150px 40px 40px 40px;
+  padding: 70px 40px 40px 40px;
+}
+
+#list-info-box {
+  height: 50px;
+  width: 250px;
+  background: white;
+  border-radius: 20px;
 }
 
 .dim:after {

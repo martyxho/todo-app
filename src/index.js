@@ -1,11 +1,11 @@
 import './style.css';
-import { displayTasks , displayLists, notifyRequired, removeRequired, closeForm } from './dom';
+import { displayTasks , displayLists, notifyRequired, removeRequired, closeForm, setListName } from './dom';
 
 const lists = (() => {
   const listObj = {};
   listObj['default'] = list('default');
   let currentList = listObj['default'];
-
+  setListName('default');
   const getList = () => listObj;
   const addList = (name, list) => {
     listObj[name] = list;
