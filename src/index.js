@@ -18,13 +18,13 @@ const lists = (() => {
 })();
 
 const calls = (() => {
-  function callDLists() {
+  function dLists() {
     displayLists(lists.getList());
   }
-  function callDTasks() {
+  function dTasks() {
     displayTasks(lists.getCurrent().getArr());
   }
-  return { callDLists, callDTasks };
+  return { dLists, dTasks };
 })();
 
 const autorun = (() => {
@@ -32,14 +32,16 @@ const autorun = (() => {
   taskCreate.onclick = addTask;
   const listCreate = document.getElementById('list-create');
   listCreate.onclick = addList;
+  const taskDelete = document.getElementById('task-delete');
+  taskDelete.addEventListener('click', deleteTask);
   const task1 = task('laundry', 'notes', '2022-12-23', 'normal');
   const task2 = task('sushi', 'notes', '2022-06-27', 'high');
   lists.getCurrent().addTask(task1);
   lists.getCurrent().addTask(task2);
   const newList = list('sushi');
   lists.addList('sushi', newList);
-  calls.callDLists();
-  calls.callDTasks();
+  calls.dLists();
+  calls.dTasks();
 })();
 
 
@@ -55,12 +57,15 @@ function list(name) {
   function getArr() {
     return arr;
   }
-  return {addTask, getArr};
+  function delTask(i) {
+    arr.splice(i, 1);
+  }
+  return {addTask, getArr, delTask};
 }
 
 function changeList(prop) {
   lists.changeCurrent(prop);
-  calls.callDTasks();
+  calls.dTasks();
 }
 
 function addList() {
@@ -88,7 +93,17 @@ function addTask() {
   const priority = getValue('priority');
   const newTask = task(title, notes, dueDate, priority);
   lists.getCurrent().addTask(newTask);
-  calls.callDTasks();
+  resetTasks();
+}
+
+function deleteTask(e) {
+  const i = e.target.dataset.i;
+  lists.getCurrent().delTask(i);
+  resetTasks();
+}
+
+function resetTasks() {
+  calls.dTasks();
   removeRequired();
   closeForm('task-form');
 }

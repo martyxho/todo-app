@@ -30,10 +30,10 @@ function displayLists(obj) {
 function displayTasks(arr) {
   const taskBox = document.getElementById('task-box');
   clear(taskBox);
-  arr.forEach(e => {
+  arr.forEach((e, i) => {
     const div = document.createElement('div');
     div.classList.add('task');
-    div.addEventListener('click', displayDetails.bind(null, e));
+    div.addEventListener('click', displayDetails.bind(null, e, i));
     const title = document.createElement('p');
     title.textContent = e.title;
     div.appendChild(title);
@@ -41,14 +41,19 @@ function displayTasks(arr) {
   });
 }
 
-function displayDetails(e) {
+function displayDetails(e, i) {
   changeValue('title', e.title);
   changeValue('notes', e.notes);
   changeValue('due-date', e.dueDate);
   changeValue('priority', e.priority);
-  openTaskForm();
+  changeIndex(i);
+  openForm('task-form'); 
 }
 
+function changeIndex(i) {
+  const del = document.getElementById('task-delete');
+  del.dataset.i = i;
+}
 function changeValue(id, value) {
   const input = document.getElementById(id);
   input.value = value;
