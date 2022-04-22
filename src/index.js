@@ -64,11 +64,17 @@ function changeList(prop) {
 }
 
 function addList() {
-  const name = getValue('list-name');
+  const name = getValue('list-name').trim();
+  if(!name) {
+    notifyRequired('list-name');
+    return;
+  }
   const newList = list(name);
   lists.addList(name, newList);
   calls.callDLists();
   changeList(name);
+  removeRequired();
+  closeForm('list-form');
 }
 
 function addTask() {
