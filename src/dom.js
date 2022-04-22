@@ -10,7 +10,7 @@ const autorun = (() => {
   const listCancel = document.getElementById('list-cancel');
   listCancel.addEventListener('click', closeForm.bind(null, 'list-form'));
   const listName = document.getElementById('list-name-info');
-  listName.addEventListener('keyup', updateListName);
+  listName.addEventListener('input', updateListName);
 })();
 
 function updateListName(e) {
