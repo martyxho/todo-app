@@ -14,7 +14,11 @@ const lists = (() => {
   const changeCurrent = (name) => {
     currentList = listObj[name];
   };
-  return {getList, addList, getCurrent, changeCurrent};
+  function changeListName(name, newName) {
+    delete Object.assign(listObj, {[newName]: listObj[name]})[name];
+    console.log(listObj);
+  }
+  return {getList, addList, getCurrent, changeCurrent, changeListName};
 })();
 
 const calls = (() => {
@@ -112,6 +116,10 @@ function getValue(id) {
   return document.getElementById(id).value;
 }
 
+function changeListName(name, newName) {
+  lists.changeListName(name, newName);
+  calls.dLists();
+}
 
 
-export { changeList };
+export { changeList, changeListName };

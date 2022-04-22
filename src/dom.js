@@ -1,4 +1,4 @@
-import { changeList } from ".";
+import { changeList, changeListName } from ".";
 
 const autorun = (() => {
   const taskBtn = document.getElementById('taskBtn');
@@ -9,7 +9,16 @@ const autorun = (() => {
   taskCancel.addEventListener('click', closeForm.bind(null, 'task-form'));
   const listCancel = document.getElementById('list-cancel');
   listCancel.addEventListener('click', closeForm.bind(null, 'list-form'));
+  const listName = document.getElementById('list-name-info');
+  listName.addEventListener('keyup', updateListName);
 })();
+
+function updateListName(e) {
+  const name = e.target.dataset.name;
+  const newName = e.target.value;
+  changeListName(name, newName);
+  setListName(newName);
+}
 
 function displayLists(obj) {
   const ul = document.getElementById('list-ul');
@@ -46,11 +55,11 @@ function displayDetails(e, i) {
   changeValue('notes', e.notes);
   changeValue('due-date', e.dueDate);
   changeValue('priority', e.priority);
-  changeIndex(i);
+  changeTaskIndex(i);
   openForm('task-form'); 
 }
 
-function changeIndex(i) {
+function changeTaskIndex(i) {
   const del = document.getElementById('task-delete');
   del.dataset.i = i;
 }
@@ -108,6 +117,7 @@ function listClick(prop) {
 function setListName(name) {
   const input = document.getElementById('list-name-info');
   input.value = name;
+  input.dataset.name = name;
 }
 
 function clear(div) {
