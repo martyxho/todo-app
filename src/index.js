@@ -5,7 +5,7 @@ const lists = (() => {
   const listObj = {};
   listObj['default'] = list('default');
   let currentList = listObj['default'];
-  setListName('default');
+  setListName('default', 'list-name-info');
   const getList = () => listObj;
   const addList = (name, list) => {
     listObj[name] = list;
@@ -18,7 +18,11 @@ const lists = (() => {
     delete Object.assign(listObj, {[newName]: listObj[name]})[name];
     console.log(listObj);
   }
-  return {getList, addList, getCurrent, changeCurrent, changeListName};
+  function listDel(name) {
+    delete listObj[name];
+  }
+
+  return {getList, addList, getCurrent, changeCurrent, changeListName, listDel };
 })();
 
 const calls = (() => {
@@ -38,6 +42,10 @@ const autorun = (() => {
   listCreate.onclick = addList;
   const taskDelete = document.getElementById('task-delete');
   taskDelete.addEventListener('click', deleteTask);
+  const editSave = document.getElementById('edit-save');
+  editSave.addEventListener('click', saveEdit);
+  const editDelete = document.getElementById('edit-delete');
+  editDelete.addEventListener('click', listDel);
   const task1 = task('laundry', 'notes', '2022-12-23', 'normal');
   const task2 = task('sushi', 'notes', '2022-06-27', 'high');
   lists.getCurrent().addTask(task1);
@@ -80,7 +88,7 @@ function addList() {
   }
   const newList = list(name);
   lists.addList(name, newList);
-  calls.callDLists();
+  calls.dLists();
   changeList(name);
   removeRequired();
   closeForm('list-form');
@@ -117,9 +125,27 @@ function getValue(id) {
 }
 
 function changeListName(name, newName) {
+  if (name == newName) {
+    return;
+  }
   lists.changeListName(name, newName);
   calls.dLists();
 }
 
+function saveEdit() {
+  const input = document.getElementById('edit-list-name');
+  const name = input.dataset.name;
+  const newName = input.value;
+  changeListName(name, newName);
+  closeForm('edit-form');
+}
+
+function listDel() {
+  const input = document.getElementById('edit-list-name');
+  const name = input.dataset.name;
+  lists.listDel(name);
+  calls.dLists();
+  closeForm('edit-form');
+}
 
 export { changeList, changeListName };

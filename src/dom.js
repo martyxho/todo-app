@@ -2,7 +2,7 @@ import { changeList, changeListName } from ".";
 
 const autorun = (() => {
   const taskBtn = document.getElementById('taskBtn');
-  taskBtn.addEventListener('click', openForm.bind(null, 'task-form'));
+  taskBtn.addEventListener('click', openTaskForm.bind(null, 'task-form'));
   const listBtn = document.getElementById('listBtn');
   listBtn.addEventListener('click', openForm.bind(null, 'list-form'));
   const taskCancel = document.getElementById('task-cancel');
@@ -17,7 +17,7 @@ function updateListName(e) {
   const name = e.target.dataset.name;
   const newName = e.target.value;
   changeListName(name, newName);
-  setListName(newName);
+  setListName(newName, 'list-name-info');
 }
 
 function displayLists(obj) {
@@ -30,7 +30,12 @@ function displayLists(obj) {
     div.addEventListener('click', listClick.bind(null, prop));
     const p = document.createElement('p');
     p.textContent = prop;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = 'Edit';
+    btn.addEventListener('click', editClick.bind(null, prop));
     div.appendChild(p);
+    div.appendChild(btn);
     li.appendChild(div);
     ul.appendChild(li);
   }
@@ -68,6 +73,11 @@ function changeValue(id, value) {
   input.value = value;
 }
 
+function openTaskForm(id) {
+  const del = document.getElementById('task-delete');
+  del.classList.toggle('hide');
+  toggleForm(id);
+}
 function openForm(id) {
   toggleForm(id);
 }
@@ -83,6 +93,12 @@ function toggleForm(id) {
   tint.classList.toggle('dim');
   const form = document.getElementById(id);
   form.classList.toggle('hide');
+}
+
+function resetForm(id) {
+  const div = document.getElementById(id);
+  const form = div.querySelector('form');
+  form.reset();
 }
 
 function notifyRequired(inputId) {
@@ -103,19 +119,21 @@ function removeRequired() {
   div.classList.toggle('required');
 }
 
-function resetForm(id) {
-  const div = document.getElementById(id);
-  const form = div.firstElementChild;
-  form.reset();
-}
+
 
 function listClick(prop) {
-  setListName(prop);
+  setListName(prop, 'list-name-info');
   changeList(prop);
 }
 
-function setListName(name) {
-  const input = document.getElementById('list-name-info');
+function editClick(prop) {
+  setListName(prop, 'edit-list-name');
+  openForm('edit-form');
+}
+
+
+function setListName(name, id) {
+  const input = document.getElementById(id);
   input.value = name;
   input.dataset.name = name;
 }
