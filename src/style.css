@@ -17,7 +17,7 @@
 }
 
 #content {
-  background: url(./mtn.webp);
+  background: url(./assets/mtn.webp);
   display: grid;
   grid-template-rows: max-content 1fr;
   gap: 40px;

@@ -1,5 +1,6 @@
 import './style.css';
 import { displayTasks , displayLists, notifyRequired, removeRequired, closeForm, setListName } from './dom';
+import catImg from './assets/cat.jpg';
 
 const lists = (() => {
   const listObj = {};
@@ -56,6 +57,10 @@ const autorun = (() => {
   calls.dTasks();
 })();
 
+const loadImg = (() => {
+  const cat = document.querySelector('.cat');
+  cat.src = catImg;
+})();
 
 function task(title, notes, dueDate, priority) {
   return {title, notes, dueDate, priority}
