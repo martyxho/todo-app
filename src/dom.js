@@ -1,4 +1,6 @@
 import { changeList, changeListName } from ".";
+import catImg from './assets/cat.jpg';
+import plusIcon from './assets/plus.svg';
 
 const autorun = (() => {
   const taskBtn = document.getElementById('taskBtn');
@@ -11,6 +13,11 @@ const autorun = (() => {
   listCancel.addEventListener('click', closeForm.bind(null, 'list-form'));
   const listName = document.getElementById('list-name-info');
   listName.addEventListener('input', updateListName);
+})();
+
+const loadImg = (() => {
+  const cat = document.querySelector('.cat');
+  cat.src = catImg;
 })();
 
 function updateListName(e) {
@@ -143,6 +150,8 @@ function clear(div) {
     div.removeChild(div.firstChild);
   }
 }
+
+
 
 
 
