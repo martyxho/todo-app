@@ -1,6 +1,6 @@
 import { changeList, changeListName } from ".";
 import catImg from './assets/cat.jpg';
-import plusIcon from './assets/plus.svg';
+import pencil from './assets/pencil-outline.svg';
 
 const autorun = (() => {
   const taskBtn = document.getElementById('taskBtn');
@@ -34,13 +34,18 @@ function displayLists(obj) {
     const li = document.createElement('li');
     const div = document.createElement('div');
     div.id = prop;
+    div.classList = 'list';
     div.addEventListener('click', listClick.bind(null, prop));
     const p = document.createElement('p');
     p.textContent = prop;
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.textContent = 'Edit';
+    btn.classList = 'editBtn';
     btn.addEventListener('click', editClick.bind(null, prop));
+    const img = document.createElement('img');
+    img.src = pencil;
+    img.classList = 'pencil';
+    btn.appendChild(img);
     div.appendChild(p);
     div.appendChild(btn);
     li.appendChild(div);

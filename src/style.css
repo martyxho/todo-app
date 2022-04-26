@@ -134,15 +134,40 @@
   display: flex;
   justify-content: space-between;
 }
+#list-container {
+  display: grid;
+  gap: 20px;
+}
+
+#list-ul {
+  list-style-type: none;
+  display: grid;
+  gap: 10px;
+}
+
+.list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editBtn {
+  background: none;
+  border: none;
+  border-radius: 25px;
+  color: blue;
+} 
+
+.pencil {
+  height: 20px;
+  color: blue;
+}
 
 .cat {
   height: 50px;
   border-radius: 25px;
 }
 
-ul {
-  list-style-type: none;
-}
 .hide {
   display: none;
 }
