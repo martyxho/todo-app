@@ -13,7 +13,15 @@ const autorun = (() => {
   listCancel.addEventListener('click', closeForm.bind(null, 'list-form'));
   const listName = document.getElementById('list-name-info');
   listName.addEventListener('input', updateListName);
+  const body = document.querySelector('body');
+  body.addEventListener('keydown', preventEnter);
 })();
+
+function preventEnter(e) {
+  if (e.keyCode == 13) {
+    e.preventDefault();
+  }
+}
 
 const loadImg = (() => {
   const cat = document.querySelector('.cat');
