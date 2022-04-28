@@ -64,16 +64,23 @@ function displayLists(obj) {
 }
 
 function displayTasks(arr) {
-  const taskBox = document.getElementById('task-box');
-  clear(taskBox);
+  const taskUl = document.getElementById('task-ul');
+  clear(taskUl);
   arr.forEach((e, i) => {
+    const li = document.createElement('li');
     const div = document.createElement('div');
-    div.classList.add('task');
+    div.classList = 'task';
     div.addEventListener('click', displayDetails.bind(null, e, i));
     const title = document.createElement('p');
     title.textContent = e.title;
+    title.classList = 'title';
+    const date = document.createElement('p');
+    date.textContent = e.dueDate;
+    date.classList = 'date';
     div.appendChild(title);
-    taskBox.appendChild(div);
+    div.appendChild(date);
+    li.appendChild(div);
+    taskUl.appendChild(li);
   });
 }
 
@@ -102,6 +109,7 @@ function openTaskForm(id) {
 }
 function openForm(id) {
   toggleForm(id);
+  const body = document.querySelector('body');
 }
 
 function closeForm(id) {

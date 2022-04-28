@@ -64,6 +64,10 @@ function list(name) {
   const arr = [];
   function addTask(task) {
     arr.push(task);
+    sort();
+  }
+  function sort() {
+    arr.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
   }
   function getArr() {
     return arr;

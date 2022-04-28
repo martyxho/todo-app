@@ -69,6 +69,23 @@
   padding: 20px;
 }
 
+#task-ul {
+  list-style: circle;
+  padding-left: 20px;
+  display: grid;
+  gap: 10px;
+}
+
+.date { 
+  font-size: 14px;
+  color: #9b9b9b;
+}
+#task-ul div {
+  display: grid;
+  grid-template-rows: max-content max-content;
+  gap: 5px;
+}
+
 .form {
   position: absolute;
   width: 600px;
@@ -81,6 +98,12 @@
   top: 50%;
   margin-top: -225px;
   z-index: 10000;
+  padding: 20px;
+}
+
+form {
+  display: grid;
+  gap: 10px;
 }
 
 .red {
