@@ -105,30 +105,60 @@ function changeValue(id, value) {
 function openTaskForm(id) {
   const del = document.getElementById('task-delete');
   del.classList.toggle('hide');
-  toggleForm(id);
+  unhideForm(id);
 }
+
 function openForm(id) {
-  toggleForm(id);
-  const body = document.querySelector('body');
+  unhideForm(id);
+  setHide();
+}
+
+function setHide() {
+  document.addEventListener('click', closeAllForms);
+}
+
+function closeAllForms(e) {
+  if(e.path.some(includesForm)) {
+    return;
+  } else {
+    hideForm();
+  }
+}
+
+function includesForm(e) {
+  if(e.className) {
+    return e.className.includes('form');
+  } else {
+    return false;
+  }
 }
 
 function closeForm(id) {
-  toggleForm(id);
-  resetForm(id);
+  unhideForm(id);
+  resetForm();
   removeRequired();
 }
 
-function toggleForm(id) {
+function hideForm() {
+  const tint = document.querySelector('.tint');
+  tint.classList.toggle('dim');
+  const hide = document.querySelector('.x');
+  hide.classList.toggle('hide');
+  resetForm();
+  removeRequired();
+}
+
+function unhideForm(id) {
   const tint = document.querySelector('.tint');
   tint.classList.toggle('dim');
   const form = document.getElementById(id);
   form.classList.toggle('hide');
+  form.classList.toggle('x');
 }
 
-function resetForm(id) {
-  const div = document.getElementById(id);
-  const form = div.querySelector('form');
-  form.reset();
+function resetForm() {
+  const forms = document.querySelectorAll('form');
+  forms.forEach(e => e.reset());
 }
 
 function notifyRequired(inputId) {
