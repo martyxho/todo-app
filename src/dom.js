@@ -18,7 +18,9 @@ const autorun = (() => {
 })();
 
 function preventEnter(e) {
-  if (e.keyCode == 13) {
+  if (e.target.id == 'notes') {
+    return;
+  } else if (e.keyCode == 13) {
     e.preventDefault();
   }
 }
