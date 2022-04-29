@@ -2,7 +2,7 @@ import './style.css';
 import { displayTasks , displayLists, notifyRequired, removeRequired, closeForm, setListName } from './dom';
 
 const lists = (() => {
-  const listObj = {};
+  let listObj = {};
   listObj['default'] = list('default');
   let currentList = listObj['default'];
   setListName('default', 'list-name-info');
@@ -21,16 +21,84 @@ const lists = (() => {
   function listDel(name) {
     delete listObj[name];
   }
+  function load(obj) {
+    listObj = obj;
+    for (const prop in listObj) {
+      currentList = listObj[prop];
+      setListName(prop, 'list-name-info');
+      break;
+    }
+  }
 
-  return {getList, addList, getCurrent, changeCurrent, changeListName, listDel };
+  return {getList, addList, getCurrent, changeCurrent, changeListName, listDel, load };
+})();
+
+const storage = (() => {
+  function storageAvailable(type) {
+    var storage;
+    try {
+        storage = window[type];
+        var x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            (storage && storage.length !== 0);
+    }
+  }
+  function save() {
+    if(storageAvailable('localStorage')) {
+      const listObj = lists.getList();
+      const newObj = {};
+      for (const prop in listObj) {
+        newObj[prop] = listObj[prop].getArr();
+      }
+      localStorage.setItem('listObj', JSON.stringify(newObj));
+    } else {
+      console.log('local storage unavailable');
+    }
+  }
+  function load() {
+    const listObj = JSON.parse(localStorage.getItem('listObj'));
+    const empty = Object.keys(listObj).length === 0;
+    if(empty) {
+      return;
+    }
+    const newObj = {};
+    for (const prop in listObj) {
+      const newList = list(prop);
+      listObj[prop].forEach(e => {
+        const newTask = task(e.title, e.notes, e.dueDate, e.priority);
+        newList.addTask(newTask);
+      });
+      newObj[prop] = newList;
+    }
+    lists.load(newObj);
+  }
+
+  return {save, load};
 })();
 
 const calls = (() => {
   function dLists() {
     displayLists(lists.getList());
+    storage.save();
   }
   function dTasks() {
     displayTasks(lists.getCurrent().getArr());
+    storage.save();
   }
   return { dLists, dTasks };
 })();
@@ -38,20 +106,17 @@ const calls = (() => {
 const autorun = (() => {
   const taskCreate = document.getElementById('task-create');
   taskCreate.onclick = addTask;
+  const eTaskSave = document.getElementById('e-task-save');
+  eTaskSave.onclick = saveTask;
   const listCreate = document.getElementById('list-create');
   listCreate.onclick = addList;
-  const taskDelete = document.getElementById('task-delete');
+  const taskDelete = document.getElementById('e-task-delete');
   taskDelete.addEventListener('click', deleteTask);
   const editSave = document.getElementById('edit-save');
   editSave.addEventListener('click', saveEdit);
   const editDelete = document.getElementById('edit-delete');
   editDelete.addEventListener('click', listDel);
-  const task1 = task('laundry', 'notes', '2022-12-23', 'normal');
-  const task2 = task('sushi', 'notes', '2022-06-27', 'high');
-  lists.getCurrent().addTask(task1);
-  lists.getCurrent().addTask(task2);
-  const newList = list('sushi');
-  lists.addList('sushi', newList);
+  storage.load();
   calls.dLists();
   calls.dTasks();
 })();
@@ -66,6 +131,10 @@ function list(name) {
     arr.push(task);
     sort();
   }
+  function saveTask(i, task) {
+    arr.splice(i, 1, task);
+    sort();
+  }
   function sort() {
     arr.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
   }
@@ -75,7 +144,7 @@ function list(name) {
   function delTask(i) {
     arr.splice(i, 1);
   }
-  return {addTask, getArr, delTask};
+  return {addTask, getArr, delTask, saveTask};
 }
 
 function changeList(prop) {
@@ -98,17 +167,38 @@ function addList() {
 }
 
 function addTask() {
-  const title = getValue('title').trim();
-  if (!title) {
-    notifyRequired('title');
-    return;
+  const newTask = createNewTask(true);
+  if(newTask) {
+    lists.getCurrent().addTask(newTask);
+    resetTasks('task-form');
   }
-  const notes = getValue('notes');
-  const dueDate = getValue('due-date');
-  const priority = getValue('priority');
-  const newTask = task(title, notes, dueDate, priority);
-  lists.getCurrent().addTask(newTask);
-  resetTasks();
+}
+
+function createNewTask(add) {
+  let t, n, d, p;
+  if (add) {
+    t = 'title', n = 'notes', d = 'due-date', p = 'priority';
+  } else {
+    t = 'e-title', n = 'e-notes', d = 'e-due-date', p = 'e-priority';
+  }
+
+  const title = getValue(t).trim();
+  if (!title) {
+    notifyRequired(t);
+    return false;
+  }
+  const notes = getValue(n);
+  const dueDate = getValue(d);
+  const priority = getValue(p);
+  return task(title, notes, dueDate, priority);
+}
+
+function saveTask(e) {
+  const i = e.target.dataset.i;
+  const newTask = createNewTask(false);
+  console.log(newTask);
+  lists.getCurrent().saveTask(i, newTask);
+  resetTasks('e-task-form');
 }
 
 function deleteTask(e) {
@@ -117,10 +207,10 @@ function deleteTask(e) {
   resetTasks();
 }
 
-function resetTasks() {
+function resetTasks(id) {
   calls.dTasks();
   removeRequired();
-  closeForm('task-form');
+  closeForm(id);
 }
 
 function getValue(id) {

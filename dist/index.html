@@ -72,7 +72,35 @@
           <div>
             <button type="button" id="task-cancel">Cancel</button>
             <button type="button" id="task-create">Save</button>
-            <button type="button" id="task-delete">Delete</button>
+          </div>
+        </form>
+      </div>
+      <div id="e-task-form" class="form hide">
+        <form action="">
+          <div>
+            <label for="e-title"></label>
+            <input type="text" id="e-title" placeholder="I want to ...">
+          </div>
+          <div>
+            <label for="e-notes"></label>
+            <textarea name="notes" id="e-notes" placeholder="Notes ..."></textarea>
+          </div>
+          <div>
+            <label for="e-due-date"></label>
+            <input type="date" id="e-due-date">
+          </div>
+          <div>
+            <label for="e-priority">Priority:</label>
+            <select name="priority" id="e-priority">
+              <option value="normal" selected>normal</option>
+              <option value="high">high</option>
+              <option value="low">low</option>
+            </select>
+          </div>
+          <div>
+            <button type="button" id="e-task-cancel">Cancel</button>
+            <button type="button" id="e-task-save">Save</button>
+            <button type="button" id="e-task-delete">Delete</button>
           </div>
         </form>
       </div>

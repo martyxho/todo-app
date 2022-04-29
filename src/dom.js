@@ -4,11 +4,13 @@ import pencil from './assets/pencil-outline.svg';
 
 const autorun = (() => {
   const taskBtn = document.getElementById('taskBtn');
-  taskBtn.addEventListener('click', openTaskForm.bind(null, 'task-form'));
+  taskBtn.addEventListener('click', openForm.bind(null, 'task-form'));
   const listBtn = document.getElementById('listBtn');
   listBtn.addEventListener('click', openForm.bind(null, 'list-form'));
   const taskCancel = document.getElementById('task-cancel');
   taskCancel.addEventListener('click', closeForm.bind(null, 'task-form'));
+  const eTaskCancel = document.getElementById('e-task-cancel');
+  eTaskCancel.addEventListener('click', closeForm.bind(null, 'e-task-form'));
   const listCancel = document.getElementById('list-cancel');
   listCancel.addEventListener('click', closeForm.bind(null, 'list-form'));
   const listName = document.getElementById('list-name-info');
@@ -85,31 +87,27 @@ function displayTasks(arr) {
 }
 
 function displayDetails(e, i) {
-  changeValue('title', e.title);
-  changeValue('notes', e.notes);
-  changeValue('due-date', e.dueDate);
-  changeValue('priority', e.priority);
+  changeValue('e-title', e.title);
+  changeValue('e-notes', e.notes);
+  changeValue('e-due-date', e.dueDate);
+  changeValue('e-priority', e.priority);
   changeTaskIndex(i);
-  openForm('task-form'); 
+  openForm('e-task-form'); 
 }
 
 function changeTaskIndex(i) {
-  const del = document.getElementById('task-delete');
+  const del = document.getElementById('e-task-delete');
   del.dataset.i = i;
+  const save = document.getElementById('e-task-save');
+  save.dataset.i = i;
 }
 function changeValue(id, value) {
   const input = document.getElementById(id);
   input.value = value;
 }
 
-function openTaskForm(id) {
-  const del = document.getElementById('task-delete');
-  del.classList.toggle('hide');
-  toggleForm(id);
-}
 function openForm(id) {
   toggleForm(id);
-  const body = document.querySelector('body');
 }
 
 function closeForm(id) {
@@ -133,9 +131,9 @@ function resetForm(id) {
 
 function notifyRequired(inputId) {
   const input = document.getElementById(inputId);
-  input.classList.toggle('red');
+  input.classList.add('red');
   const div = input.parentElement;
-  div.classList.toggle('required');
+  div.classList.add('required');
 }
 
 function removeRequired() {
