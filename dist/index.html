@@ -48,88 +48,93 @@
         <ul id="task-ul"></ul>
       </div>
       <div id="task-form" class="form hide">
-        <form action="">
-          <div>
-            <label for="title"></label>
-            <input type="text" id="title" placeholder="I want to ...">
-          </div>
-          <div>
-            <label for="notes"></label>
-            <textarea name="notes" id="notes" placeholder="Notes ..."></textarea>
-          </div>
-          <div>
-            <label for="due-date"></label>
-            <input type="date" id="due-date">
-          </div>
-          <div>
-            <label for="priority">Priority:</label>
-            <select name="priority" id="priority">
-              <option value="normal" selected>normal</option>
-              <option value="high">high</option>
-              <option value="low">low</option>
-            </select>
-          </div>
-          <div>
+        <div class="task">
+          <form action="" class="task-form">
+            <div>
+              <label for="title"></label>
+              <input type="text" id="title" placeholder="I want to ...">
+            </div>
+            <div>
+              <label for="due-date"></label>
+              <input type="date" id="due-date">
+            </div>
+            <div>
+              <label for="notes"></label>
+              <textarea name="notes" id="notes" placeholder="Notes ..."></textarea>
+            </div>
+            <div>
+              <label for="priority">Priority:</label>
+              <select name="priority" id="priority">
+                <option value="normal" selected>normal</option>
+                <option value="high">high</option>
+                <option value="low">low</option>
+              </select>
+            </div>
+          </form>
+          <div class="buttons">
             <button type="button" id="task-cancel">Cancel</button>
             <button type="button" id="task-create">Save</button>
           </div>
-        </form>
+        </div>
       </div>
       <div id="e-task-form" class="form hide">
-        <form action="">
-          <div>
-            <label for="e-title"></label>
-            <input type="text" id="e-title" placeholder="I want to ...">
-          </div>
-          <div>
-            <label for="e-notes"></label>
-            <textarea name="notes" id="e-notes" placeholder="Notes ..."></textarea>
-          </div>
-          <div>
-            <label for="e-due-date"></label>
-            <input type="date" id="e-due-date">
-          </div>
-          <div>
-            <label for="e-priority">Priority:</label>
-            <select name="priority" id="e-priority">
-              <option value="normal" selected>normal</option>
-              <option value="high">high</option>
-              <option value="low">low</option>
-            </select>
-          </div>
-          <div>
-            <button type="button" id="e-task-cancel">Cancel</button>
-            <button type="button" id="e-task-save">Save</button>
-            <button type="button" id="e-task-delete">Delete</button>
-          </div>
-        </form>
+        <div class="task">
+          <form class="task-form" action="">
+            <div>
+              <label for="e-title"></label>
+              <input type="text" id="e-title" placeholder="I want to ...">
+            </div>
+            <div>
+              <label for="e-due-date"></label>
+              <input type="date" id="e-due-date">
+            </div>
+            <div>
+              <label for="e-notes"></label>
+              <textarea name="notes" id="e-notes" placeholder="Notes ..."></textarea>
+            </div>
+            <div class="select">
+              <label for="e-priority">Priority:</label>
+              <select name="priority" id="e-priority">
+                <option value="normal" selected>normal</option>
+                <option value="high">high</option>
+                <option value="low">low</option>
+              </select>
+            </div>
+          </form>
+            <div class="buttons">
+              <button type="button" id="e-task-cancel">Cancel</button>
+              <button type="button" id="e-task-save">Save</button>
+              <button type="button" id="e-task-delete">Delete</button>
+            </div>
+        </div>
       </div>
       <div id="list-form" class="form hide">
-        <h2>NAME THIS LIST</h2>
-        <form action="">
-          <div>
-            <label for="list-name"></label>
-            <input type="text" id="list-name">
-          </div>
-          <div>
+        <div class="list-form">
+          <form action="">
+            <div>
+              <label for="list-name"></label>
+              <input type="text" id="list-name" placeholder="List name...">
+            </div>
+          </form>
+          <div class="buttons">
             <button type="button" id="list-cancel">Cancel</button>
             <button type="button" id="list-create">Create</button>
           </div>
-        </form>
-        <div id="list-req-box"></div>
+        </div>
       </div>
       <div id="edit-form" class="form hide">
-        <h2>LIST NAME</h2>
-        <form action="">
-          <div>
-            <label for="edit-list-name"></label>
-            <input type="text" id="edit-list-name">
-          </div>
-          <div>
+        <div class="list-form">
+          <form action="">
+            <div>
+              <label for="edit-list-name"></label>
+              <input type="text" id="edit-list-name">
+            </div>
+          </form>
+          <div class="buttons">
             <button id="edit-delete" type="button">Delete</button>
             <button id="edit-save" type="button">Save</button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>

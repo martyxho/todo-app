@@ -72,8 +72,7 @@ const storage = (() => {
   }
   function load() {
     const listObj = JSON.parse(localStorage.getItem('listObj'));
-    const empty = Object.keys(listObj).length === 0;
-    if(empty) {
+    if(!listObj) {
       return;
     }
     const newObj = {};
