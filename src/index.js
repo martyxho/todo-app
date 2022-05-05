@@ -63,7 +63,10 @@ const storage = (() => {
       const listObj = lists.getList();
       const newObj = {};
       for (const prop in listObj) {
-        newObj[prop] = listObj[prop].getArr();
+        const obj = [];
+        obj.push(listObj[prop].getArr());
+        obj.push(listObj[prop].getDoneArr());
+        newObj[prop] = obj;
       }
       localStorage.setItem('listObj', JSON.stringify(newObj));
     } else {
@@ -78,9 +81,13 @@ const storage = (() => {
     const newObj = {};
     for (const prop in listObj) {
       const newList = list(prop);
-      listObj[prop].forEach(e => {
+      listObj[prop][0].forEach(e => {
         const newTask = task(e.title, e.notes, e.dueDate, e.priority);
         newList.addTask(newTask);
+      });
+      listObj[prop][1].forEach(e => {
+        const newTask = task(e.title, e.notes, e.dueDate, e.priority);
+        newList.addDone(newTask);
       });
       newObj[prop] = newList;
     }
@@ -132,14 +139,18 @@ function list(name) {
   const doneArr = [];
   function addTask(task) {
     taskArr.push(task);
-    sort();
+    sort(taskArr);
+  }
+  function addDone(task) {
+    doneArr.push(task);
+    sort(doneArr);
   }
   function saveTask(i, task) {
     taskArr.splice(i, 1, task);
-    sort();
+    sort(taskArr);
   }
-  function sort() {
-    taskArr.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+  function sort(arr) {
+    arr.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
   }
   function getArr() {
     return taskArr;
@@ -153,9 +164,10 @@ function list(name) {
   function markDone(i) {
     doneArr.push(taskArr[i]);
     delTask(i);
+    sort(doneArr);
   }
 
-  return {addTask, getArr, delTask, saveTask, getDoneArr, markDone};
+  return {addTask, getArr, delTask, saveTask, getDoneArr, addDone, markDone};
 }
 
 function changeList(prop) {
