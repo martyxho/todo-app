@@ -125,6 +125,8 @@ const autorun = (() => {
   editSave.addEventListener('click', saveEdit);
   const editDelete = document.getElementById('edit-delete');
   editDelete.addEventListener('click', listDel);
+  const doneUnmark = document.getElementById('unmark');
+  doneUnmark.addEventListener('click', unmarkDone);
   storage.load();
   calls.dLists();
   calls.dTasks();
@@ -166,8 +168,14 @@ function list(name) {
     delTask(i);
     sort(doneArr);
   }
+  function unmark(i) {
+    taskArr.push(doneArr[i]);
+    doneArr.splice(i, 1);
+    sort(taskArr);
+    sort(doneArr);
+  }
 
-  return {addTask, getArr, delTask, saveTask, getDoneArr, addDone, markDone};
+  return {addTask, getArr, delTask, saveTask, getDoneArr, addDone, markDone, unmark};
 }
 
 function changeList(prop) {
@@ -234,6 +242,13 @@ function markDone(e) {
   lists.getCurrent().markDone(i);
   resetTasks('e-task-form');
 }
+
+function unmarkDone(e) {
+  const i = e.target.dataset.i;
+  lists.getCurrent().unmark(i);
+  resetTasks('d-task-form');
+}
+
 function resetTasks(id) {
   calls.dTasks();
   removeRequired();

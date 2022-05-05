@@ -11,6 +11,8 @@ const autorun = (() => {
   taskCancel.addEventListener('click', closeForm.bind(null, 'task-form'));
   const eTaskCancel = document.getElementById('e-task-cancel');
   eTaskCancel.addEventListener('click', closeForm.bind(null, 'e-task-form'));
+  const doneClose = document.getElementById('close');
+  doneClose.addEventListener('click', closeForm.bind(null, 'd-task-form'));
   const listCancel = document.getElementById('list-cancel');
   listCancel.addEventListener('click', closeForm.bind(null, 'list-form'));
   const listName = document.getElementById('list-name-info');
@@ -102,6 +104,8 @@ function changeTaskIndex(i) {
   save.dataset.i = i;
   const done = document.getElementById('e-task-done');
   done.dataset.i = i;
+  const unmark = document.getElementById('unmark');
+  unmark.dataset.i = i;
 }
 
 function changeValue(id, value) {
