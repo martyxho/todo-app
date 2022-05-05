@@ -65,14 +65,14 @@ function displayLists(obj) {
   }
 }
 
-function displayTasks(arr) {
-  const taskUl = document.getElementById('task-ul');
+function displayTasks(arr, id, a) {
+  const taskUl = document.getElementById(id);
   clear(taskUl);
   arr.forEach((e, i) => {
     const li = document.createElement('li');
     const div = document.createElement('div');
     div.classList = 'task';
-    div.addEventListener('click', displayDetails.bind(null, e, i));
+    div.addEventListener('click', displayDetails.bind(null, e, i, a));
     const title = document.createElement('p');
     title.textContent = e.title;
     title.classList = 'title';
@@ -86,13 +86,13 @@ function displayTasks(arr) {
   });
 }
 
-function displayDetails(e, i) {
-  changeValue('e-title', e.title);
-  changeValue('e-notes', e.notes);
-  changeValue('e-due-date', e.dueDate);
-  changeValue('e-priority', e.priority);
+function displayDetails(e, i, a) {
+  changeValue(`${a}-title`, e.title);
+  changeValue(`${a}-notes`, e.notes);
+  changeValue(`${a}-due-date`, e.dueDate);
+  changeValue(`${a}-priority`, e.priority);
   changeTaskIndex(i);
-  openForm('e-task-form'); 
+  openForm(`${a}-task-form`); 
 }
 
 function changeTaskIndex(i) {
@@ -100,7 +100,10 @@ function changeTaskIndex(i) {
   del.dataset.i = i;
   const save = document.getElementById('e-task-save');
   save.dataset.i = i;
+  const done = document.getElementById('e-task-done');
+  done.dataset.i = i;
 }
+
 function changeValue(id, value) {
   const input = document.getElementById(id);
   input.value = value;

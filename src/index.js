@@ -96,7 +96,8 @@ const calls = (() => {
     storage.save();
   }
   function dTasks() {
-    displayTasks(lists.getCurrent().getArr());
+    displayTasks(lists.getCurrent().getArr(), 'task-ul', 'e');
+    displayTasks(lists.getCurrent().getDoneArr(), 'done-ul', 'd');
     storage.save();
   }
   return { dLists, dTasks };
@@ -107,6 +108,8 @@ const autorun = (() => {
   taskCreate.onclick = addTask;
   const eTaskSave = document.getElementById('e-task-save');
   eTaskSave.onclick = saveTask;
+  const taskDone = document.getElementById('e-task-done');
+  taskDone.onclick = markDone;
   const listCreate = document.getElementById('list-create');
   listCreate.onclick = addList;
   const taskDelete = document.getElementById('e-task-delete');
@@ -125,25 +128,34 @@ function task(title, notes, dueDate, priority) {
 }
 
 function list(name) {
-  const arr = [];
+  const taskArr = [];
+  const doneArr = [];
   function addTask(task) {
-    arr.push(task);
+    taskArr.push(task);
     sort();
   }
   function saveTask(i, task) {
-    arr.splice(i, 1, task);
+    taskArr.splice(i, 1, task);
     sort();
   }
   function sort() {
-    arr.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+    taskArr.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
   }
   function getArr() {
-    return arr;
+    return taskArr;
+  }
+  function getDoneArr() {
+    return doneArr;
   }
   function delTask(i) {
-    arr.splice(i, 1);
+    taskArr.splice(i, 1);
   }
-  return {addTask, getArr, delTask, saveTask};
+  function markDone(i) {
+    doneArr.push(taskArr[i]);
+    delTask(i);
+  }
+
+  return {addTask, getArr, delTask, saveTask, getDoneArr, markDone};
 }
 
 function changeList(prop) {
@@ -195,7 +207,6 @@ function createNewTask(add) {
 function saveTask(e) {
   const i = e.target.dataset.i;
   const newTask = createNewTask(false);
-  console.log(newTask);
   lists.getCurrent().saveTask(i, newTask);
   resetTasks('e-task-form');
 }
@@ -203,9 +214,14 @@ function saveTask(e) {
 function deleteTask(e) {
   const i = e.target.dataset.i;
   lists.getCurrent().delTask(i);
-  resetTasks();
+  resetTasks('e-task-form');
 }
 
+function markDone(e) {
+  const i = e.target.dataset.i;
+  lists.getCurrent().markDone(i);
+  resetTasks('e-task-form');
+}
 function resetTasks(id) {
   calls.dTasks();
   removeRequired();

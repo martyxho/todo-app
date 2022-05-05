@@ -23,8 +23,14 @@
   background: url(./assets/mtn.webp);
   display: grid;
   grid-template-rows: max-content 1fr;
+  grid-template-columns: max-content max-content;
   gap: 40px;
   padding: 70px 40px 40px 40px;
+}
+
+#task-div {
+  grid-column: 1;
+  grid-row-: 2;
 }
 
 #list-info-box {
@@ -72,7 +78,7 @@
   padding: 20px;
 }
 
-#task-ul {
+.task-div ul {
   list-style: circle;
   padding-left: 20px;
   display: grid;
