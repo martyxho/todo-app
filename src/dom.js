@@ -106,6 +106,8 @@ function changeTaskIndex(i) {
   done.dataset.i = i;
   const unmark = document.getElementById('unmark');
   unmark.dataset.i = i;
+  const doneDel = document.getElementById('d-delete');
+  doneDel.dataset.i = i;
 }
 
 function changeValue(id, value) {

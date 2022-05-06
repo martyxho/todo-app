@@ -127,6 +127,10 @@ const autorun = (() => {
   editDelete.addEventListener('click', listDel);
   const doneUnmark = document.getElementById('unmark');
   doneUnmark.addEventListener('click', unmarkDone);
+  const doneDelete = document.getElementById('d-delete');
+  doneDelete.onclick = deleteDone;
+  const clear = document.getElementById('clear');
+  clear.onclick = clearDone;
   storage.load();
   calls.dLists();
   calls.dTasks();
@@ -167,6 +171,7 @@ function list(name) {
     doneArr.push(taskArr[i]);
     delTask(i);
     sort(doneArr);
+    sort(taskArr);
   }
   function unmark(i) {
     taskArr.push(doneArr[i]);
@@ -174,8 +179,15 @@ function list(name) {
     sort(taskArr);
     sort(doneArr);
   }
+  function doneDelete(i) {
+    doneArr.splice(i, 1);
+    sort(doneArr);
+  }
+  function clear() {
+    doneArr.splice(0, doneArr.length);
+  }
 
-  return {addTask, getArr, delTask, saveTask, getDoneArr, addDone, markDone, unmark};
+  return {addTask, getArr, delTask, saveTask, getDoneArr, addDone, markDone, unmark, doneDelete, clear};
 }
 
 function changeList(prop) {
@@ -247,6 +259,17 @@ function unmarkDone(e) {
   const i = e.target.dataset.i;
   lists.getCurrent().unmark(i);
   resetTasks('d-task-form');
+}
+
+function deleteDone(e) {
+  const i = e.target.dataset.i;
+  lists.getCurrent().doneDelete(i);
+  resetTasks('d-task-form');
+}
+
+function clearDone() {
+  lists.getCurrent().clear();
+  calls.dTasks();
 }
 
 function resetTasks(id) {
