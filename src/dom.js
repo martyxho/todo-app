@@ -77,7 +77,11 @@ function displayTasks(arr, id, a) {
     div.addEventListener('click', displayDetails.bind(null, e, i, a));
     const title = document.createElement('p');
     title.textContent = e.title;
-    title.classList = 'title';
+    if (e.priority == 'high') {
+      title.classList = 'title high';
+    } else {
+      title.classList = 'title';
+    }
     const date = document.createElement('p');
     date.textContent = e.dueDate;
     date.classList = 'date';

@@ -160,6 +160,10 @@ form {
   grid-template-rows: 1fr 50px;
 }
 
+.high {
+  width: max-content;
+  background: yellow;
+}
 .buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
